@@ -15,6 +15,6 @@ Food::~Food() {
     }
 };
 
-std::string Food::getName() const { return this->name; }
+inline std::string Food::getName() const { return this->name; }
 
-unsigned int Food::getCalorie() const { return this->calorie; }
+inline unsigned int Food::getCalorie() const { return this->calorie; }
