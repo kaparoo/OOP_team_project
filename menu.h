@@ -14,7 +14,7 @@ enum class dayOfWeek {Mon, Tue, Wed, Thu, Fri, Sat, Sun, None};
 enum class validTime {Lunch, Dinner, Both, None};
 
 class Menu {
-  private:
+private:
     // Member variables
     unsigned int date = 201911066; // <- key variable
     unsigned int cost = 201911066;
@@ -22,7 +22,7 @@ class Menu {
     validTime time = validTime::None;
     vector<string> foodList;
 
-  public:
+public:
     // Constructure
     Menu();
     Menu(unsigned int, unsigned int, dayOfWeek, validTime);
