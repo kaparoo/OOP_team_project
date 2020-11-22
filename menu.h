@@ -4,12 +4,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
-using std::vector
-using std::string
+using std::vector;
+using std::string;
+using std::find;
 
-typedef enum dayOfWeek {Mon, Tue, Wed, Thu, Fri, Sat, Sun};
-typedef enum validTime {Lunch, Dinner, Allday};
+enum class dayOfWeek {Mon, Tue, Wed, Thu, Fri, Sat, Sun};
+enum class validTime {Lunch, Dinner, Both};
 
 class Menu {
     private:
@@ -18,35 +20,38 @@ class Menu {
       unsigned int date; // <- key variable
       unsigned int cost;
       dayOfWeek day;
-      validTime valid;
+      validTime time;
       vector<string> foodList;
-      vector<string> remarkList;
 
     public:
       
       // Constructure
       Menu();
-      
+      Menu(unsigned int, unsigned int, dayOfWeek, validTime);
+      Menu(unsigned int, unsigned int, dayOfWeek, validTime, string);
+      Menu(unsigned int, unsigned int, dayOfWeek, validTime, vector<string>);
+      Menu(unsigned int, unsigned int, dayOfWeek, validTime, string*, const unsigned int&);
+
       // Destructure
       ~Menu();
 
       // Member functions
-      inline void setCost(const int);
+      void setCost(const unsigned int);
       
-      void addFood(const string);
-      void addFood(const string*, const int);
-      void addRemark(const string);
-      void addRemark(const string*, const int);
-      void removeFood(string);
-      void removeRemark(string);
+      inline void addFood(const string);
+      void addFood(const string*, const unsigned int&);
+      // bool removeFood(const string);
 
-      inline unsigned int getDate() const;
-      inline unsigned int getCost() const;
-      inline dayOfWeek getDay() const;
-      inline validTime getValidTime() const;
+      unsigned int getDate() const;
+      unsigned int getCost() const;
+      dayOfWeek getDay() const;
+      validTime getValidTime() const;
+      vector<string> getFoodList() const;
 
+      // Check whether we can select the menu at targetTime
       inline bool isValidFor(validTime) const;
-
+      // Search food in the menu (using STL::find())
+      inline bool isFoodInMenu(const string) const;
 };
 
 #endif
