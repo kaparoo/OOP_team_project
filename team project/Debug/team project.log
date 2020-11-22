@@ -1,0 +1,6 @@
+﻿  read_csv.cpp
+  team project.cpp
+C:\Users\82105\source\repos\team project\team project.cpp(13,17): error C3861: 'get_ingredient': 식별자를 찾을 수 없습니다.
+C:\Users\82105\source\repos\team project\team project.cpp(23,10): error C2440: 'return': 'int'에서 'std::vector<std::string,std::allocator<std::string>>'(으)로 변환할 수 없습니다.
+C:\Users\82105\source\repos\team project\team project.cpp(23,10): message : class 'std::vector<std::string,std::allocator<std::string>>'의 생성자가 'explicit'으로 선언되었습니다.
+  코드를 생성하고 있습니다...
