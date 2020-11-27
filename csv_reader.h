@@ -10,6 +10,8 @@ using std::vector;
 using std::string;
 using std::ifstream;
 
+vector<string> splitLine(const string&, const char&);
+
 class CSVReader {
 private:
     string file_name;
