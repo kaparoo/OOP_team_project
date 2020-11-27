@@ -30,7 +30,7 @@ cafeteria::cafeteria(string a) {
         vector<string> info;
 
         ifstream myfile;
-        myfile.open("C:\\Users\\¼Ò¿¬\\Desktop\\2-2\\student.csv");
+        myfile.open("C:\\Users\\ï¿½Ò¿ï¿½\\Desktop\\2-2\\student.csv");
         while (myfile.good()) {
 
             string line;
@@ -89,23 +89,23 @@ cafeteria::~cafeteria() {}
 string cafeteria::getPrice(string cafeteria, string date, string type) {
     if (cafeteria == "student") {
         vector<string>print(student.at(date));
-        if (type == "ÀÏÇ°") { return print[2]; }
-        else if (type == "Áß½Ä") { return print[5]; }
-        else if (type == "¼®½Ä") { return print[12]; }
+        if (type == "ï¿½Ç°") { return print[2]; }
+        else if (type == "ï¿½ß½ï¿½") { return print[5]; }
+        else if (type == "ï¿½") { return print[12]; }
     }
 
 }
 string* cafeteria::getMenu(string cafeteria, string date, string type) {
     if (cafeteria == "student") {
         vector<string>print(student.at(date));
-        if (type == "ÀÏÇ°") {
+        if (type == "ï¿½Ç°") {
             string* returnlist = new string[2];
             returnlist[0] = print[3];
             returnlist[1] = print[4];
             return returnlist;
             delete[] returnlist;
         }
-        else if (type == "Áß½Ä") {
+        else if (type == "ï¿½ß½ï¿½") {
             string* returnlist = new string[6];
             for (int i = 0; i < 6; i++) {
                 returnlist[i] = print[6 + i];
@@ -113,7 +113,7 @@ string* cafeteria::getMenu(string cafeteria, string date, string type) {
             return returnlist;
             delete[] returnlist;
         }
-        else if (type == "¼®½Ä") {
+        else if (type == "ï¿½") {
             string* returnlist = new string[5];
             for (int i = 0; i < 5; i++) {
                 returnlist[i] = print[13 + i];

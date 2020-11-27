@@ -1,6 +1,6 @@
 #include "menu.h"
 
-// [Constructor]
+// Constructor
 Menu::Menu() { /* Make dummy first (!!MUST USE SETTERS!!)*/ }
 Menu::Menu(unsigned int new_date, unsigned int new_cost, unsigned int new_calorie, dayOfWeek new_day, validTime new_time) {
 	defaultSetter(new_date, new_cost, new_calorie, new_day, new_time);
@@ -18,14 +18,14 @@ Menu::Menu(unsigned int new_date, unsigned int new_cost, unsigned int new_calori
 	this->foodList = food_list;
 }
 
-// [Destructor]
+// Destructor
 Menu::~Menu() { foodList.clear(); }
 
-// [Member functions]
+// Member functions
 inline void Menu::defaultSetter(unsigned int new_date, unsigned int new_cost, unsigned int new_calorie, dayOfWeek new_day, validTime new_time) {
 	this->date = new_date;
 	this->cost = new_cost;
-	this->total_calorie = new_calorie;
+	this->calorie = new_calorie;
 	this->day = new_day;
 	this->time = new_time;
 }
@@ -34,9 +34,10 @@ inline void Menu::setDate(const unsigned int new_date) { this->date = new_date; 
 inline void Menu::setCost(const unsigned int new_cost) { this->cost = new_cost; }
 inline void Menu::setDay(const dayOfWeek new_day) { this->day = new_day; }
 inline void Menu::setTime(const validTime new_time) { this->time = new_time; }
+inline void Menu::setCalorie(const unsigned int new_calorie) { this->calorie = new_calorie;}
 
 inline void Menu::addFood(const string food_name) {
-	// Avoid duplication in the foodList
+	// Avoid duplication in foodList
 	if(!isFoodInMenu(food_name)) this->foodList.push_back(food_name);
 }
 void Menu::addFood(const string* food_array, const int size) {
@@ -45,6 +46,7 @@ void Menu::addFood(const string* food_array, const int size) {
 
 unsigned int Menu::getDate() const { return this->date; }
 unsigned int Menu::getCost() const { return this->cost; }
+unsigned int Menu::getCalorie() const { return this->calorie; }
 dayOfWeek Menu::getDay() const { return this->day; }
 validTime Menu::getValidTime() const { return this->time; }
 vector<string> Menu::getFoodList() const { return this->foodList; }
@@ -60,6 +62,7 @@ inline bool Menu::isValidFor(validTime target_time) const {
 	}
 	return false;
 }
+
 inline bool Menu::isFoodInMenu(const string food_name) const {
 	const auto& foods = this->foodList; // make alias
 	return (find(foods.begin(),foods.end(), food_name) != foods.end());

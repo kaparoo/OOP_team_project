@@ -1,7 +1,11 @@
-#include <iostream>
 #include "user.h"
 #include "menu.h"
-using namespace std;
+
+#include <iostream>
+
+using std::cin;
+using std::cout;
+using std::endl;
 
 void updateFood();
 void updateUser();
@@ -13,7 +17,7 @@ Menu recommendMenu();
 User signUp();
 
 int main(int argc, char** argv) {
-  
+    return 0;
 }
 
 void setup(){

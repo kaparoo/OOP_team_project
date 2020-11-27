@@ -18,7 +18,7 @@ private:
     // Member variables (201911066 is placeholder, i.e., dummy data)
     unsigned int date = 201911066; // <- key variable
     unsigned int cost = 201911066;
-    unsigned int total_calorie = 201911066;
+    unsigned int calorie = 201911066; // total calorie
     dayOfWeek day = dayOfWeek::None;
     validTime time = validTime::None;
     vector<string> foodList;
