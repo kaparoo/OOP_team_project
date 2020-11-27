@@ -1,19 +1,7 @@
 #include<iostream>
+#include "user.h"
 using namespace std;
-class User {
-protected:
-	string name;
-	int member_id;
-	string password;
-	string last_eaten_food;
-	string personal_allergics;
-public:
-	User() {}
-	User(string, int, string, string, string);
-	bool login(int, string);
-	bool search(string, string,string);
-	void saveData();
-};
+
 User::User(string name, int member_id, string password, string last_eaten_food="", string personal_allergics="") {
 	name = name;
 	member_id = member_id;
