@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    CSVReader reader("test.csv");
+    CSVReader reader("demo_menu.csv");
     vector<vector<string>> dataTable = reader.getData();
     for(vector<string> dataRow : dataTable) {
         for(string data: dataRow) {
