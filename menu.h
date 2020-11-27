@@ -15,9 +15,10 @@ enum class validTime {Lunch, Dinner, Both, None};
 
 class Menu {
 private:
-    // Member variables
+    // Member variables (201911066 is placeholder, i.e., dummy data)
     unsigned int date = 201911066; // <- key variable
     unsigned int cost = 201911066;
+    unsigned int total_calorie = 201911066;
     dayOfWeek day = dayOfWeek::None;
     validTime time = validTime::None;
     vector<string> foodList;
@@ -25,28 +26,29 @@ private:
 public:
     // Constructure
     Menu();
-    Menu(unsigned int, unsigned int, dayOfWeek, validTime);
-    Menu(unsigned int, unsigned int, dayOfWeek, validTime, const string);
-    Menu(unsigned int, unsigned int, dayOfWeek, validTime, const string*, const int);
-    Menu(unsigned int, unsigned int, dayOfWeek, validTime, vector<string>);
+    Menu(unsigned int, unsigned int, unsigned int, dayOfWeek, validTime);
+    Menu(unsigned int, unsigned int, unsigned int, dayOfWeek, validTime, const string);
+    Menu(unsigned int, unsigned int, unsigned int, dayOfWeek, validTime, const string*, const int);
+    Menu(unsigned int, unsigned int, unsigned int, dayOfWeek, validTime, vector<string>);
 
     // Destructure
     ~Menu();
 
     // Member functions
-    inline void defaultSetter(unsigned int, unsigned int, dayOfWeek, validTime);
+    inline void defaultSetter(unsigned int, unsigned int, unsigned int, dayOfWeek, validTime);
 
     inline void setDate(const unsigned int);
     inline void setCost(const unsigned int);
     inline void setDay(const dayOfWeek);
     inline void setTime(const validTime);
-    
+    inline void setCalorie(const unsigned int);
+
     inline void addFood(const string);
     void addFood(const string*, const int);
-    // bool removeFood(const string);
 
     unsigned int getDate() const;
     unsigned int getCost() const;
+    unsigned int getCalorie() const;
     dayOfWeek getDay() const;
     validTime getValidTime() const;
     vector<string> getFoodList() const;

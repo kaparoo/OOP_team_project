@@ -2,19 +2,19 @@
 
 // [Constructor]
 Menu::Menu() { /* Make dummy first (!!MUST USE SETTERS!!)*/ }
-Menu::Menu(unsigned int new_date, unsigned int new_cost, dayOfWeek new_day, validTime new_time) {
-	defaultSetter(new_date, new_cost, new_day, new_time);
+Menu::Menu(unsigned int new_date, unsigned int new_cost, unsigned int new_calorie, dayOfWeek new_day, validTime new_time) {
+	defaultSetter(new_date, new_cost, new_calorie, new_day, new_time);
 }
-Menu::Menu(unsigned int new_date, unsigned int new_cost, dayOfWeek new_day, validTime new_time, const string food_name) {
-	defaultSetter(new_date, new_cost, new_day, new_time);
+Menu::Menu(unsigned int new_date, unsigned int new_cost, unsigned int new_calorie, dayOfWeek new_day, validTime new_time, const string food_name) {
+	defaultSetter(new_date, new_cost, new_calorie, new_day, new_time);
 	this->addFood(food_name);
 }
-Menu::Menu(unsigned int new_date, unsigned int new_cost, dayOfWeek new_day, validTime new_time, const string* food_array, const int size) {
-	defaultSetter(new_date, new_cost, new_day, new_time);
+Menu::Menu(unsigned int new_date, unsigned int new_cost, unsigned int new_calorie, dayOfWeek new_day, validTime new_time, const string* food_array, const int size) {
+	defaultSetter(new_date, new_cost, new_calorie, new_day, new_time);
 	this->addFood(food_array, size);
 }
-Menu::Menu(unsigned int new_date, unsigned int new_cost, dayOfWeek new_day, validTime new_time, vector<string> food_list) {
-	defaultSetter(new_date, new_cost, new_day, new_time);
+Menu::Menu(unsigned int new_date, unsigned int new_cost, unsigned int new_calorie, dayOfWeek new_day, validTime new_time, vector<string> food_list) {
+	defaultSetter(new_date, new_cost, new_calorie, new_day, new_time);
 	this->foodList = food_list;
 }
 
@@ -22,9 +22,10 @@ Menu::Menu(unsigned int new_date, unsigned int new_cost, dayOfWeek new_day, vali
 Menu::~Menu() { foodList.clear(); }
 
 // [Member functions]
-inline void Menu::defaultSetter(unsigned int new_date, unsigned int new_cost, dayOfWeek new_day, validTime new_time) {
+inline void Menu::defaultSetter(unsigned int new_date, unsigned int new_cost, unsigned int new_calorie, dayOfWeek new_day, validTime new_time) {
 	this->date = new_date;
 	this->cost = new_cost;
+	this->total_calorie = new_calorie;
 	this->day = new_day;
 	this->time = new_time;
 }
