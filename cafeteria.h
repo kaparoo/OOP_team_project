@@ -1,8 +1,12 @@
+#ifndef __OOP_CAFETERIA__
+#define __OOP_CAFETERIA__
+
 #include <iostream> 
 #include <string> 
 #include <vector> 
 #include <fstream> 
-#include<map>
+#include <map>
+
 using namespace std;
 
 class cafeteria {
@@ -31,6 +35,7 @@ cafeteria::cafeteria(string a) {
 
         ifstream myfile;
         myfile.open("C:\\Users\\�ҿ�\\Desktop\\2-2\\student.csv");
+        //myfile.open("csv_files/student_cafeteria_weekly_menu(11.09~11.13).csv"); 
         while (myfile.good()) {
 
             string line;
@@ -123,3 +128,5 @@ string* cafeteria::getMenu(string cafeteria, string date, string type) {
         }
     }
 }
+
+#endif

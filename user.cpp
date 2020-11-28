@@ -1,27 +1,74 @@
-#include<iostream>
 #include "user.h"
+
+#include <iostream>
+#include <fstream>
+#include <string>
+
+#include "csv_reader.h"
+
 using namespace std;
 
-User::User(string name, int member_id, string password, string last_eaten_food="", string personal_allergics="") {
-	name = name;
-	member_id = member_id;
-	password = password;
-	last_eaten_food = last_eaten_food;
-	personal_allergics = personal_allergics;
+User::User(int fir_id, string fir_password) {
+	id = fir_id;
+	password = fir_password;
 }
-bool User::login(int member_id, string check_password) {
-	if (this->password == check_password) { return true; }
+
+bool User::checkId(int check_id, string check_password) {
+	if (this->password == password) { return true; }
 	else { return false; }
+	int num = 0;
+	ifstream datafile;
+	datafile.open("data.csv");
+	while (datafile.good()) {
+		string line;
+		getline(datafile, line, ',');
+		num++;
+	}
+	num /= 3;
+	cout << num;
+	CSVReader reader("data.csv");
+	vector<vector<string>> data = reader.getData();
+	for (int i = 0; i < num; i++) {
+		int help = stoi(data[i][0]);
+		string help_s = data[i][1];
+		if (check_id == help){
+			if (check_password == help_s)
+				return "True";
+			else{
+				cout << "비밀번호가 틀립니다!";
+				return "False";
+      }
+    }
+	}
+	cout << "일치하는 id가 없습니다!";
+	return "False";
 }
-bool User::search(string Restaurant_name, string date, string type) {
+int User::getCal() {
+	return calorie;
 }
-void User::saveData() {}
-class Student :public User {
-
-};
-class Professor :public User {
-
-};
-class Employees :public User {
-
-};
+//void User::setCal(Menu m) {
+//	calorie = m.getCalorie();
+//}
+User::~User() {
+	int num = 0;
+	ifstream datafile;
+	datafile.open("data.csv");
+	while (datafile.good()) {
+		string line;
+		getline(datafile, line, ',');
+		num++;
+	}
+	num /= 3;
+	cout << num;
+	CSVReader reader("data.csv");
+	vector<vector<string>> data = reader.getData();
+	ofstream newfile;
+	newfile.open("data.csv");
+	for (int i = 0; i < num; i++) {
+		for (int j = 0; j < 3; j++) {
+			newfile << data[i][j] << ",";
+		}
+		newfile << "\n";
+	}
+	newfile << id << "," << password << "," << calorie << endl;
+}

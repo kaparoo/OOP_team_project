@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -10,7 +11,7 @@ Food::Food(string name) {
 	}
 
 Food::Food(string name, unsigned int calorie) {
-		this->name=name;
+		this->name = name;
 		this->calorie = calorie;
 }
 

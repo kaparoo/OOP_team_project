@@ -1,7 +1,10 @@
+#include <iostream>
+
 #include "user.h"
 #include "menu.h"
-
-#include <iostream>
+#include "food.h"
+#include "cafeteria.h"
+#include "csv_reader.h"
 
 using std::cin;
 using std::cout;
@@ -17,14 +20,17 @@ Menu recommendMenu();
 User signUp();
 
 int main(int argc, char** argv) {
-    return 0;
+  class cafeteria a("stduent");
+  return 0;
 }
 
+/*
 void setup(){
   updateFood();
   updateUser();
   updateRestaurant();
 }
+*/
 void signIn(){}
 User signUp(){
   unsigned int ID; string password;
@@ -35,6 +41,9 @@ User signUp(){
   //return User(ID, password);
   return User();
 }
+
+
+
 /* console 작업중 (goto문 if,while문으로 수정예정)
   setup();
   cout<<"Welcome:)"<<endl;
