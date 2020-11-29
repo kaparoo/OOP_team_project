@@ -2,11 +2,16 @@
 #include <fstream>
 #include <map>
 #include <string>
+
 #include "food.h"
 #include "cafeteria.h"
+
 using namespace std;
-void updateFood(){
-	ifstream menu("food.txt",std::ios::in);
+
+map<string,Food> updateFood() {
+	
+    ifstream menu("food.txt", std::ios::in);
+    
     string name;
     string calorie;
     map<string, Food> Food_list;
@@ -18,4 +23,5 @@ void updateFood(){
         //cout << name << " " << calorie << endl;
     }
     menu.close();
+    return Food_list;
 }

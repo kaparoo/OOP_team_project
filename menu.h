@@ -39,9 +39,9 @@ public:
 
     inline void setDate(const unsigned int);
     inline void setCost(const unsigned int);
+    inline void setCalorie(const unsigned int);
     inline void setDay(const dayOfWeek);
     inline void setTime(const validTime);
-    inline void setCalorie(const unsigned int);
 
     inline void addFood(const string);
     void addFood(const string*, const int);

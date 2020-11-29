@@ -20,4 +20,6 @@ public:
 	unsigned int getCal();
 };
 
+map<string,Food> updateFood();
+
 #endif

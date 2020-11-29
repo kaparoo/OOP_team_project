@@ -10,7 +10,6 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-void updateFood();
 void updateUser();
 void updateRestaurant();
 void setup();
@@ -26,7 +25,7 @@ int main(int argc, char** argv) {
 
 /*
 void setup(){
-  updateFood();
+  auto food_list=updateFood();
   updateUser();
   updateRestaurant();
 }
