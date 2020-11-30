@@ -8,20 +8,23 @@
 
 using namespace std;
 
-map<string,Food> updateFood() {
+map<string, Food> updateFood() {
 	
     ifstream menu("food.txt", std::ios::in);
     
     string name;
     string calorie;
-    map<string, Food> Food_list;
+    // map<string, Food> Food_list;
+    map<string, Food> foodMap;
 
     while (menu.peek() != EOF) {
         getline(menu, name, ',');
         getline(menu, calorie);
-        Food_list.insert(make_pair(name,Food(name, stoi(calorie))));
-        //cout << name << " " << calorie << endl;
+        // Food_list.insert(make_pair(name,Food(name, stoi(calorie))));
+        foodMap.insert(make_pair(name, Food(name, stoi(calorie))));
+        // cout << name << " " << calorie << endl;
     }
     menu.close();
-    return Food_list;
+    // return Food_list;
+    return foodMap;
 }

@@ -19,7 +19,7 @@ public:
     CSVReader(const string);
     ~CSVReader() {};
 
-    vector<vector<string>> getData();
+    vector<vector<string>> getDataTable();
 };
 
 #endif

@@ -1,30 +1,33 @@
 #ifndef __OOP_USER__
 #define __OOP_USER__
 
-#include <iostream>
+#include<iostream>
 #include <fstream>
 #include <string>
 #include <map>
-#include "check_user_num.h"
 #include "csv_reader.h"
-
+#include "check_user_num.h"
 using namespace std;
 class User {
 protected:
 	int id;
 	string password;
-	unsigned int calorie;
-	map<int, string> m;
+	int calorie;
 public:
 	User() { id = 0;}
 	User(int, string);
+	User(int, string, int);
 	~User();
-	map<int, string> Getusermap();
-	bool checkId(int, string);
+	bool checkId(string);
 	int getCal();
+	void changePassword(string);
+	string getPassword();
+	friend void storeUser(User);
+	friend void storeUser(map<int, User>);
+
 
 	//void setCal(Menu);
 	//maybe set id 
 };
-
+map<int, User> updateUser();
 #endif

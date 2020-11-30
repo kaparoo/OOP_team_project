@@ -1,10 +1,10 @@
 #ifndef __OOP_MENU__
 #define __OOP_MENU__
 
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <algorithm>
 
 using std::vector;
 using std::string;
