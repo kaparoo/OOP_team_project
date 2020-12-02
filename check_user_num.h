@@ -1,7 +1,7 @@
 #ifndef __OOP_CHECK_USER_NUM__
 #define __OOP_CHECK_USER_NUM__
 
-#include<iostream>
+#include <iostream>
 #include <fstream>
 #include <string>
 

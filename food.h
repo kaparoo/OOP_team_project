@@ -1,11 +1,11 @@
 #ifndef __OOP_FOOD__
 #define __OOP_FOOD__
 
-#include <iostream>
-#include <vector>
 #include <string>
+#include <map>
 
-using namespace std;
+using std::string;
+using std::map;
 
 class Food {
 private:
@@ -14,12 +14,13 @@ private:
 public:
 	Food(string);
 	Food(string, unsigned int);
+    ~Food() {};
 
-	void setCal(unsigned int);
-	string getName();
-	unsigned int getCal();
+	inline void setCal(unsigned int);
+	inline string getName() const;
+	inline unsigned int getCal() const;
 };
 
-map<string,Food> updateFood();
+map<string, Food> updateFood();
 
 #endif

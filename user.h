@@ -5,26 +5,37 @@
 #include <fstream>
 #include <string>
 #include <map>
-#include "check_user_num.h"
+
 #include "csv_reader.h"
+#include "menu.h"
+#include "check_user_num.h"
 
 using namespace std;
+
 class User {
 protected:
+    static const string data_file_dir = "./data_files/data.csv"; // data.csv 경로는 고정되어 있으므로 static
 	int id;
 	string password;
-	unsigned int calorie;
-	map<int, string> m;
+	int calorie;
 public:
 	User() { id = 0;}
 	User(int, string);
+	User(int, string, int);
 	~User();
-	map<int, string> Getusermap();
-	bool checkId(int, string);
+	bool checkId(string);
 	int getCal();
-
+  void setCal(Menu);
+  void setCal(int);
+	void changePassword(string);
+	string getPassword();
+	friend void storeUser(User);
+	friend void storeUser(map<int, User>);
+    friend map<int, User> updateUser();
 	//void setCal(Menu);
 	//maybe set id 
 };
+
+map<int, User> updateUser();
 
 #endif

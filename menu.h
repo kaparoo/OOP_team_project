@@ -1,47 +1,45 @@
 #ifndef __OOP_MENU__
 #define __OOP_MENU__
 
-#include <iostream>
+#include <algorithm>
 #include <string>
 #include <vector>
-#include <algorithm>
 
 using std::vector;
 using std::string;
 using std::find;
 
 enum class dayOfWeek {Mon, Tue, Wed, Thu, Fri, Sat, Sun, None};
-enum class validTime {Lunch, Dinner, Both, None};
+
+dayOfWeek changeTypeOfDay(const string& target_day);
 
 class Menu {
 private:
-    // Member variables (201911066 is placeholder, i.e., dummy data)
-    unsigned int date = 201911066; // <- key variable
-    unsigned int cost = 201911066;
-    unsigned int calorie = 201911066; // total calorie
+    // Member variables (20201109 is placeholder, i.e., dummy data)
+    unsigned int date = 20201109; // <- key variable
+    unsigned int cost = 20201109;
+    unsigned int calorie = 20201109; // total calorie
     dayOfWeek day = dayOfWeek::None;
-    validTime time = validTime::None;
     vector<string> foodList;
+    
+    // Private member functions   
+    inline void defaultSetter(unsigned int, unsigned int, unsigned int, dayOfWeek);
+    inline bool isFoodInMenu(const string) const; // Search food in the menu (using std::find() function of STL)
 
 public:
-    // Constructure
+    // Constructor & Destructor
     Menu();
-    Menu(unsigned int, unsigned int, unsigned int, dayOfWeek, validTime);
-    Menu(unsigned int, unsigned int, unsigned int, dayOfWeek, validTime, const string);
-    Menu(unsigned int, unsigned int, unsigned int, dayOfWeek, validTime, const string*, const int);
-    Menu(unsigned int, unsigned int, unsigned int, dayOfWeek, validTime, vector<string>);
-
-    // Destructure
+    Menu(unsigned int, unsigned int, unsigned int, dayOfWeek);
+    Menu(unsigned int, unsigned int, unsigned int, dayOfWeek, const string);
+    Menu(unsigned int, unsigned int, unsigned int, dayOfWeek, const string*, const int);
+    Menu(unsigned int, unsigned int, unsigned int, dayOfWeek, vector<string>);
     ~Menu();
 
-    // Member functions
-    inline void defaultSetter(unsigned int, unsigned int, unsigned int, dayOfWeek, validTime);
-
+    // Public member functions
     inline void setDate(const unsigned int);
     inline void setCost(const unsigned int);
     inline void setCalorie(const unsigned int);
     inline void setDay(const dayOfWeek);
-    inline void setTime(const validTime);
 
     inline void addFood(const string);
     void addFood(const string*, const int);
@@ -52,11 +50,6 @@ public:
     dayOfWeek getDay() const;
     validTime getValidTime() const;
     vector<string> getFoodList() const;
-
-    // Check whether we can select the menu at targetTime
-    inline bool isValidFor(validTime) const;
-    // Search food in the menu (using STL::find())
-    inline bool isFoodInMenu(const string) const;
 };
 
 #endif

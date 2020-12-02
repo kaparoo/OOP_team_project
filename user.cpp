@@ -3,74 +3,104 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <map>
+
 #include "check_user_num.h"
 #include "csv_reader.h"
-#include <map>
+#include "menu.h"
 
 using namespace std;
 
 User::User(int fir_id,string fir_password) {
 	id = fir_id;
 	password = fir_password;
+	calorie = 0;
 }
-bool User::checkId(int check_id, string check_password) {
-	Usernum u;
-	int num = u.Getnum();
-	int help;
-	string help_s;
-	CSVReader reader("data.csv");
-	vector<vector<string>> data = reader.getData();
-	for (int i = 0; i < num; i++) {
-		help = stoi(data[i][0]);
-		help_s = data[i][1];
-		if (check_id == help) {
-			if (check_password == help_s) {
-				cout << "login 성공!";
-				return "True";
-			}
-			else {
-			cout << "비밀번호가 틀립니다!";
-			return "False";
-			}
-		}
-	}
-	cout << "일치하는 id가 없습니다!";
-	return "False";
+User::User(int fir_id, string fir_password, int fir_calorie) {
+	id = fir_id;
+	password = fir_password;
+	calorie = fir_calorie;
 }
+bool User::checkId(string check_password) {
+	if (this->password == check_password)
+		return true;
+	else
+		return false;
+}
+string User::getPassword() {
+	return password;
+}
+
+void User::changePassword(string new_password) {
+	password = new_password;
+}
+
 int User::getCal() {
 	return calorie;
 }
-//void User::setCal(Menu m) {
-//	calorie = m.getCalorie();
-//}
-map<int, string> User::Getusermap(){
+
+void User::setCal(Menu m) {
+	calorie = static_cast<int>(m.getCalorie());
+}
+
+void User::setCal(int m) {
+	calorie = m;
+}
+
+User::~User() {}
+map<int, User> updateUser() {
+	map<int, User> m;
 	Usernum u;
 	int num = u.Getnum();
-	CSVReader reader("data.csv");
-	vector<vector<string>> data = reader.getData();
+    //CSVReader reader("./data_files/data.csv");
+	CSVReader reader(User::data_file_dir); // <- friend 함수에서 static 변수를 가져올 수 있어
+	vector<vector<string>> data = reader.getDataTable();
 	for (int i = 0; i < num; i++) {
-		m.insert(pair<int, string>(stoi(data[i][0]), data[i][1]));
+		m.insert(pair<int, User>(stoi(data[i][0]), User(stoi(data[i][0]),data[i][1],stoi(data[i][2]))));
 	}
-	if (id!=0)
-		m.insert(pair<int, string>(id, password));
 	return m;
 }
-User::~User() {
+
+void storeUser(User u1) { // 새로운 유저가 만들어지면 무조건 storeUser해주세요.
 	Usernum u;
 	int num = u.Getnum();
-	CSVReader reader("data.csv");
-	vector<vector<string>> data = reader.getData();
+	// CSVReader reader("./data_files/data.csv");
+    CSVReader reader(User::data_file_dir);
+	vector<vector<string>> data = reader.getDataTable();
 	ofstream newfile;
-	newfile.open("data.csv");
+    // newfile.open("./data_files/data.csv");
+	newfile.open(User::data_file_dir);
 	for (int i = 0; i < num; i++) {
 		for (int j = 0; j < 3; j++) {
 			newfile << data[i][j] << ",";
 		}
 		newfile << "\n";
 	}
-	while (id != 0)
-	{
-		newfile << id << "," << password << "," << calorie << "," << endl;
-		id = 0;
+  newfile << u1.id << "," << u1.password <<","<< u1.calorie << ","<<"\n";
+}
+
+void storeUser(map<int, User> userMap) {
+	ofstream newfile;
+    // newfile.open("./data_files/data.csv");
+	newfile.open(User::data_file_dir);
+	for (auto p:userMap) {
+		newfile << p.first << "," << userMap[p.first].password << "," << userMap[p.first].calorie << ","<<"\n";
 	}
 }
+
+/* 컴파일 오류때문에 주석처ꈰ (11/30)
+ * main함수는 프로그램 내에서 오직 하나만 존재해야 해
+ * 테스트 때문에 집어넣은거야? -박재우
+ * 맞습니다.
+ */
+// int main() {
+// 	int a;
+//	User u(201911066, "dddd", 333);
+//	storeUser(u);
+//	map<int, User> m = updateUser();
+//	for (auto p : m) {
+//		cout << p.first << m[p.first].getPassword() << endl;
+//	}
+//	m[201911195].changePassword("Kee");
+//	storeUser(m);
+//}

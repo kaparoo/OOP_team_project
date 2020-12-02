@@ -1,3 +1,7 @@
 # visual studio code 파일 무시
 /.vscode
 .vscode/
+
+# .o 파일 무시
+.o
+.out
