@@ -5,20 +5,18 @@
 #include <string>
 #include <vector>
 
-using std::vector;
-using std::string;
 using std::find;
+using std::string;
+using std::vector;
 
 enum class dayOfWeek {Mon, Tue, Wed, Thu, Fri, Sat, Sun, None};
-
-dayOfWeek changeTypeOfDay(const string& target_day);
 
 class Menu {
 private:
     // Member variables (20201109 is placeholder, i.e., dummy data)
     unsigned int date = 20201109; // <- key variable
     unsigned int cost = 20201109;
-    unsigned int calorie = 20201109; // total calorie
+    unsigned int calorie = 20201109; // total calorie of food in foodList
     dayOfWeek day = dayOfWeek::None;
     vector<string> foodList;
     
@@ -48,8 +46,9 @@ public:
     unsigned int getCost() const;
     unsigned int getCalorie() const;
     dayOfWeek getDay() const;
-    validTime getValidTime() const;
     vector<string> getFoodList() const;
 };
+
+dayOfWeek changeTypeOfDay(const string& target_day);
 
 #endif

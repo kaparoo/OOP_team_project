@@ -1,13 +1,5 @@
 #include "menu.h"
 
-#include <algorithm>
-#include <string>
-#include <vector>
-
-using std::vector;
-using std::string;
-using std::find;
-
 // Constructor & Destructor
 Menu::Menu() { /* Make dummy first (!!MUST USE SETTERS!!)*/ }
 Menu::Menu(unsigned int new_date, unsigned int new_cost, unsigned int new_calorie, dayOfWeek new_day) {
