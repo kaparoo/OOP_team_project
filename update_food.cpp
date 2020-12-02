@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <map>
 #include <string>
@@ -23,6 +22,5 @@ map<string, Food> updateFood() {
         foodMap.insert(make_pair(name, Food(name, stoi(calorie))));
     }
 
-    foodFile.close();
-    return foodMap;
+    foodFile.close();    return foodMap;
 }

@@ -2,6 +2,10 @@
 #define __OOP_MENU__
 
 #include <algorithm>
+<<<<<<< HEAD
+=======
+#include <iostream>
+>>>>>>> c0f6a2f9210069d74a26aca3933a88543afb400d
 #include <string>
 #include <vector>
 

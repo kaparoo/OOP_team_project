@@ -1,6 +1,5 @@
 #include "cafeteria.h"
 
-#include <iostream>
 #include <map>
 #include <vector>
 #include <string>
@@ -10,34 +9,6 @@
 #include "food.h" // for updateFood()
 
 using namespace std;
-
-
-/*
-class Cafeteria {
-protected:
-    // for data I/O
-    static map<string, Food> foodMap = NULL;
-    const string directory_prefix("./data_files");
-    string csv_file_list_name;
-    vector<string> csvFileList;
-    // for implementation
-    vector<string> categoryList;
-    typedef vector<Menu> MenuList;
-    typedef map<string, MenuList> MenuMap;
-public:
-    // Constructure & Destructure
-    Cafeteria();
-    Cafeteria(const string& new_list_file_name);
-    virtual ~Cafeteria() {};
-    // Member functions
-    inline void setCSVFileList(void);
-    inline int getTotalCalorie(const MenuList& menuList) const;
-    inline bool isFoodMapNotExist(void) const;
-    MenuMap addCSVtoMenuMap(const string& new_list_file_name);
-    map<string, Menu> getMenuTable(const int& date, const validTime& time) const; // for non-member user
-    map<string, Menu> getMenuTable(const int& date, const validTime& time, const int& calorie) const; // for member user
-};
-*/
 
 Cafeteria::Cafeteria(const string& new_list_file_name) {
     this->csv_list_file_name = new_list_file_name;
@@ -74,24 +45,6 @@ inline bool Cafeteria::isFoodMapNotExist(void) const {
 void Cafeteria::addCSVtoMenuTable(const string& csv_file_name) {
     CSVReader csvFile(csv_file_name);
     vector<vector<string>> csvData = csvFile.getDataTable();
-    
-}
-
-
-map<string,vector<string>> Cafeteria::getMenutable(string findDay, int minCalorie,int maxCalorie){
- map<string,vector<string>> allMenu;
- dayOfWeek day=changeTypeOfDay(findDay);
- for(auto& menus:MenuMap){
-   for(auto& menu:menus.second){
-     if(menu.getDay()==day){
-     if(menu.getCalorie()>minCalorie && menu.getCalorie()<maxCalorie){
-       allMenu.insert(make_pair(menus.first,menu.getFoodList()));
-       break;
-         }
-     }
-   }
- }
- return allMenu;
 }
 
 map<string,Cafeteria> updateCafeteria(){

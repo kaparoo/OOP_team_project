@@ -21,9 +21,11 @@ protected:
     static const string dir_prefix = "./data_files";
     string csv_list_file_name;
     vector<string> csvFileList;
+
     // for implementation
     typedef vector<Menu> MenuList;
     map<string, MenuList> MenuTable;
+    
     // Protected member functions
     inline void setCSVFileList(void);
     inline int getTotalCalorie(const vector<string>& foodList) const;
@@ -39,7 +41,6 @@ public:
     // Public member functions
     map<string, Menu> getMenuTable(const int& date, const validTime& time) const; // for non-member user
     map<string, Menu> getMenuTable(const int& date, const validTime& time, const int& calorie) const; // for member user
-    
 };
 
 #endif
