@@ -34,7 +34,6 @@ User currentUser; //use in memberConsole
 int main(int argc, char** argv) {
     cout << "Welcome" << endl;
     startConsole();
-
     return 0;
 }
 
