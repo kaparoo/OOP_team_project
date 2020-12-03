@@ -2,13 +2,6 @@
 #define __OOP_MENU__
 
 #include <algorithm>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-#include <iostream>
->>>>>>> c0f6a2f9210069d74a26aca3933a88543afb400d
->>>>>>> cf0a1fe0ca4ffd13b2bdf1acb2ddacdb81aa4805
 #include <string>
 #include <vector>
 

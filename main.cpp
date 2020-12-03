@@ -2,8 +2,9 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <exception>
 
-// #include "cafeteria.h"
+#include "cafeteria.h"
 #include "csv_reader.h"
 #include "food.h"
 #include "menu.h"
@@ -152,16 +153,21 @@ void recommendMenu() { //메뉴추천
       currentUser.setCal(lastCal);
     }
   }
-  cout << "menu recommend" << endl;
-  
+  int excessCal=currentUser.getCal()-800;
+  cout << "This is a recommended menu based on the recommended calories per meal." << endl;
+  if(excessCal>1500){
+    cout<<"한 끼 정도는 먹지 않는 것을 권장드립니다."<<endl;
+  }
+  //else{}
   //메뉴가져오기
   // for(auto cafeteria:cafeteriaMap){
   //   cout<<cafeteria.first<<endl;
-  //   for(auto menulist:cafeteria.second.getMenutable(date,time,currentUser.getCal())){
+  //   for(auto menulist:cafeteria.second.getMenutable(date,time,800-excessCal)){
   //     cout<<menulist.first<<endl;
   //     for(auto food:menulist.second.getFoodlist()){
   //       cout<<food<<endl;
   //     }
+  //     cout<<"---------------------------"<<endl;
   //   }
   // }
 }
@@ -185,16 +191,17 @@ void searchMenu() { //메뉴출력
         cin >> time;
     }
     cout << "search menu" << endl;
-// 메뉴 출력
-// for(auto cafeteria:cafeteriaMap){
-//   cout<<cafeteria.first<<endl; // 식당이름
-//   for(auto menulist:cafeteria.second.getMenutable(day)){
-//     cout<<menulist.first<<endl; // 메뉴 이름
-//     for(auto menu:menulist.second){
-//       cout<<menu<<endl; //음식 이름
-//     }
-//   }
-// }
+ //메뉴가져오기
+  // for(auto cafeteria:cafeteriaMap){
+  //   cout<<cafeteria.first<<endl;
+  //   for(auto menulist:cafeteria.second.getMenutable(date,time)){
+  //     cout<<menulist.first<<endl;
+  //     for(auto food:menulist.second.getFoodlist()){
+  //       cout<<food<<endl;
+  //     }
+  //     cout<<"---------------------------"<<endl;
+  //   }
+  // }
 }
 
 //종료
@@ -222,29 +229,32 @@ void askOption(std::vector<std::string> prompt, FunctionMap actions) {
     while (1) { // 종료시까지 실행
         cout << "Menu Recommendation Service For DGIST members"<<endl;
         // 화면에 출력될 텍스트들을 출력
-        for (const string& line : prompt) {
-            std::cout << line << std::endl;
-        }
+        displayPromptInBox(prompt, 1);
 
         // 사용자로 부터 선택지를 입력받음
-        int option;
-        std::cout << "원하시는 항목의 번호을 입력하세요.: ";
-        std::cin >> option;
+        string user_input;
+        cout << endl << "원하시는 항목의 번호을 입력하세요.: ";
+        cin >> user_input;
 
-        // 사용자가 int형식으로 선택지를 입력했다고 가정하고(=type error가 없다고 가정) <-- 기본적인 프로그램을 완성하면 예외처리로 동작하도록 고려해봅시다 
-        if (actions.find(option) == actions.end()) { // 유효하지 않은 선택
+        int option;
+
+        try {
+            option = stoi(user_input);
+            if (actions.find(option) == actions.end()) { // 유효하지 않은 선택
+                std::cout << "유효하지 않은 선택입니다!" << std::endl;
+                std::cout << "화면에 나온 번호 중에 골라주세요!" << std::endl;
+                continue;
+            } else {
+                action = actions[option]; // 선택에 맞는 함수를 찾음   
+                action();
+                cout << "아무 문자를 입력하면 전으로 돌아갑니다." << endl;
+                string any;
+                cin >> any;
+            }
+        } catch(exception e) {
+            displayClear();
             std::cout << "유효하지 않은 선택입니다!" << std::endl;
             std::cout << "화면에 나온 번호 중에 골라주세요!" << std::endl;
-            continue;
         }
-        else { // 유효한 선택
-            action = actions[option]; // 선택에 맞는 함수를 찾음   
-            action();
-            cout << "아무 문자를 입력하면 전으로 돌아갑니다." << endl;
-            string any;
-            cin >> any;
-        }
-        system("cls");
     }
-    action(); // 선택에 맞는 함수 실행
 }
