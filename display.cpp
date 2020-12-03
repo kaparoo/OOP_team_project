@@ -30,7 +30,7 @@ void displayPromptInBox(const vector<string>& prompt, const int& padding = 2) {
     cout << "└" << horizontal_border << "┘" << endl;
 }
 
-int main() {
-    vector<string> prompt = {"Hello", "World", "I\'m", "kaparoo!"};
-    displayPromptInBox(prompt);
-}
+// int main() {
+//     vector<string> prompt = {"Hello", "World", "I\'m", "kaparoo!"};
+//     displayPromptInBox(prompt);
+// }

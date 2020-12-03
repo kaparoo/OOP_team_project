@@ -9,10 +9,10 @@ Food::Food(string name, unsigned int calorie) {
 	this->calorie = calorie;
 }
 
-inline void Food::setCal(unsigned int calorie) { this->calorie = calorie; }
+void Food::setCal(unsigned int calorie) { this->calorie = calorie; }
 
-inline string Food::getName() const { return this->name; };
-inline unsigned int Food::getCal() const { return this->calorie; };
+string Food::getName() { return this->name; };
+unsigned int Food::getCal() { return this->calorie; };
 
 map<string, Food> updateFood() {
 	

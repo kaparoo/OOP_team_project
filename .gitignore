@@ -2,6 +2,6 @@
 /.vscode
 .vscode/
 
-# .o 파일 무시
+# 목적 파일 무시
 .o
 .out

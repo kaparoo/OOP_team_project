@@ -55,4 +55,6 @@ public:
 
 // };
 
+map<string, Cafeteria> updateCafeteria();
+
 #endif

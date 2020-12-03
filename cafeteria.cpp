@@ -1,4 +1,7 @@
 #include "cafeteria.h"
+#include <exception>
+
+using namespace std;
 
 // initialize static variables
 const string Cafeteria::dir_prefix = "./data_files/";
@@ -9,7 +12,7 @@ Cafeteria::Cafeteria(const string new_list_file_name, const map<string, validTim
     this->categoryValidTime = newCategoryValidTime;
     setCSVFileList(); // load csv files
     for(const string& csv_file_name : this->csvFileList)
-        addCSVtoMenuTable(csv_file_name);
+        addCSVtoMenuTable(dir_prefix+csv_file_name);//file 경로 수정함
 }
 
 inline void Cafeteria::setCSVFileList(void) {
@@ -25,8 +28,7 @@ inline int Cafeteria::getTotalCalorie(const vector<string>& foodList) const {
     int total_calorie = 0;
     for(const string& food_name: foodList) {
         if(this->foodMap.find(food_name) != this->foodMap.end()) {
-            Food food = foodMap[food_name];
-            total_calorie += food.getCal();
+            total_calorie += foodMap[food_name].getCal();
         }
     }
     return total_calorie;
@@ -40,11 +42,11 @@ void Cafeteria::addCSVtoMenuTable(const string& csv_file_name) {
     CSVReader csvFile(csv_file_name);
     vector<vector<string>> csvDataTable = csvFile.getDataTable();
     const int& num_row = csvDataTable.size();
-    const int& num_col = csvDataTable[0].size();
     const vector<string>& currentDayList = csvDataTable[0];
     const vector<string>& currentDateList = csvDataTable[1];
     for(int row = 2; row < num_row; ++row) {
         MenuList categoryMenuList;
+        const int& num_col = csvDataTable[row].size();
         const vector<string>& category = csvDataTable[row];
         const vector<string>& category_title = splitLine(category[0], '-');
         const string category_name = category_title[0];
@@ -94,27 +96,33 @@ map<string, Menu> Cafeteria::getMenuTable(const int& date, const validTime& time
     for(const auto& categoryEntry: rawResultTable) {
         const string category_name = categoryEntry.first;
         const Menu categoryMenu = categoryEntry.second;
-        if(categoryMenu.getCalorie() <= calorie) { // ??? 맞게 한건가? 예스예스 생성자 어떻게 쓰는지 밑에 수정해줘
+        if(categoryMenu.getCalorie() <= calorie) {
             resultTable.insert(make_pair(category_name, categoryMenu));
-        } 
+        }
     }
     return resultTable;
 }
 
 map<string,Cafeteria> updateCafeteria(){
   map<string,Cafeteria> CafeteriaMap;
+
   map<string, validTime> studentMap;
   studentMap.insert(make_pair("일품", validTime::Lunch));
   studentMap.insert(make_pair("중식", validTime::Lunch));
   studentMap.insert(make_pair("석식", validTime::Dinner));
   Cafeteria studentCafeteria("student_cafeteria_csv_list.txt", studentMap);
-  map<string, validTime> staffMap;
-  staffMap.insert(make_pair("중식", validTime::Lunch));
-  Cafeteria staffCafeteria("staff_cafeteria_csv_list.txt", staffMap);
-  map<string, validTime> researchMap;
-  //researchMap.insert(make_pair("중식", Lunch));
-  Cafeteria researchCafeteria("research_cafeteria_csv_list.txt", researchMap);
-  CafeteriaMap.insert(make_pair("StudentCafeteria",studentCafeteria));
-  CafeteriaMap.insert(make_pair("StaffCafeteria",staffCafeteria));
-  CafeteriaMap.insert(make_pair("ResearchCafeteria",researchCafeteria));
+  
+//   // map<string, validTime> staffMap;
+//   // staffMap.insert(make_pair("중식", validTime::Lunch));
+//   // Cafeteria staffCafeteria("staff_cafeteria_csv_list.txt", staffMap);
+  
+//   // map<string, validTime> researchMap;
+//   // //researchMap.insert(make_pair("중식", Lunch));
+//   // Cafeteria researchCafeteria("research_cafeteria_csv_list.txt", researchMap);
+  
+//   // CafeteriaMap.insert(make_pair("StudentCafeteria",studentCafeteria));
+//   // CafeteriaMap.insert(make_pair("StaffCafeteria",staffCafeteria));
+//   // CafeteriaMap.insert(make_pair("ResearchCafeteria",researchCafeteria));
+  
+  return CafeteriaMap;
 }
