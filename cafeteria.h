@@ -11,7 +11,7 @@
 
 using namespace std;
 
-enum class validTime {Lunch, Dinner, None};
+enum class validTime { Lunch, Dinner, None };
 
 class Cafeteria {
 protected:
@@ -24,11 +24,11 @@ protected:
     typedef vector<Menu> MenuList;
     map<string, MenuList> menuTable;
     map<string, validTime> categoryValidTime;
-    
+
     // Protected member functions
     inline void setCSVFileList(void);
     inline int getTotalCalorie(const vector<string>& foodList) const;
-    
+
     void addCSVtoMenuTable(const string& csv_file_name);
 
 public:
@@ -43,18 +43,6 @@ public:
     map<string, Menu> getMenuTable(const int& date, const validTime& time, const int& calorie); // for member user
 };
 
-// class StaffCafeteria : public Cafeteria {
-
-// };
-
-// class StudentCafeteria : public Cafeteria {
-
-// };
-
-// class ResearchCafeteria : public Cafeteria {
-
-// };
 
 map<string, Cafeteria> updateCafeteria();
-
 #endif

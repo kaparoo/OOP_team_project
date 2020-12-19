@@ -38,7 +38,8 @@ int main(int argc, char** argv) {
 
 // 첫시작 콘솔
 void startConsole() {
-    system("cls");
+    //system("cls");
+    system("clear");
     cout << "This is the first page" << endl;
     FunctionMap startFunctionMap;
     startFunctionMap.insert(make_pair(1, signIn));
@@ -51,7 +52,8 @@ void startConsole() {
 
 //회원용 콘솔
 void memberConsole() {
-    system("cls");
+    //system("cls");
+    system("clear");
     cout << "This is for the member" << endl;
     cout << "User: " << currentUser.getId() << endl;
     FunctionMap memberFunctionMap;
@@ -65,7 +67,8 @@ void memberConsole() {
 
 //비회원용 콘솔
 void nonmemberConsole() {
-    system("cls");
+    //system("cls");
+    system("clear");
     cout << "This is for the non-member" << endl;
     cout << "If you are a DGIST member, back to the page and log in." << endl;
     FunctionMap nonmemberFunctionMap;
@@ -115,12 +118,12 @@ void recommendMenu() { //메뉴추천
         cin >> date;
     }
     //시간대 입력
-    int time;
+    int selection;
     cout << "[1] Lunch [2] Dinner" << endl;
-    cin >> time;
-    while (time != 1 && time != 2) {
+    cin >> selection;
+    while (selection != 1 && selection != 2) {
         cout << "It's the wrong input. Input again: " << endl;
-        cin >> time;
+        cin >> selection;
     }
     //유저 칼로리 정보 확인
     if (currentUser.getCal() == 0) {
@@ -153,22 +156,39 @@ void recommendMenu() { //메뉴추천
     }
     int excessCal = currentUser.getCal() - 800;
     cout << "This is a recommended menu based on the recommended calories per meal." << endl;
-    if (excessCal > 1500) {
+    if (excessCal > 600) {
         cout << "한 끼 정도는 먹지 않는 것을 권장드립니다." << endl;
     }
-     //else{
-     //  //메뉴가져오기
-     //  for(auto cafeteria:cafeteriaMap){
-     //  cout<<cafeteria.first<<endl;
-     //  for(auto menulist:cafeteria.second.getMenuTable(date,time,800-excessCal)){
-     //    cout<<menulist.first<<endl;
-     //    for(auto food:menulist.second.getFoodlist()){
-     //      cout<<food<<endl;
-     //    }
-     //    cout<<"---------------------------"<<endl;
-     //  }
-     //}
-     //}
+     else{
+       //메뉴가져오기
+        if (selection == 1) {
+            for (auto cafeteria : cafeteriaMap) {
+                cout << cafeteria.first << endl;
+                for (auto menulist : cafeteria.second.getMenuTable(stoi(date), validTime::Lunch, 800 - excessCal)) {
+                    cout << menulist.first << endl;
+                    for (auto food : menulist.second.getFoodList()) {
+                        cout << food << endl;
+                    }
+                    cout << "---------------------------" << endl;
+                }
+            }
+        }
+        else {
+            for (auto cafeteria : cafeteriaMap) {
+                cout << cafeteria.first << endl;
+                for (auto menulist : cafeteria.second.getMenuTable(stoi(date), validTime::Dinner, 800 - excessCal)) {
+                    cout << menulist.first << endl;
+                    for (auto food : menulist.second.getFoodList()) {
+                        cout << food << endl;
+                    }
+                    cout << "---------------------------" << endl;
+                }
+            }
+        }
+       
+       
+     
+     }
 
 }
 
@@ -183,29 +203,42 @@ void searchMenu() { //메뉴출력
         cin >> date;
     }
     //시간대 입력
-    int time;
+    int selection;
     cout << "[1] Lunch [2] Dinner" << endl;
-    cin >> time;
-    while (time != 1 && time != 2) {
+    cin >> selection;
+    while (selection != 1 && selection != 2) {
         cout << "It's the wrong input. Input again: " << endl;
-        cin >> time;
+        cin >> selection;
     }
-    validTime vtime = (time == 1)? validTime::Lunch : validTime::Dinner;
     cout << "search menu" << endl;
     //메뉴가져오기
-    // for(auto cafeteria:cafeteriaMap){
-    //     string key = cafeteria.first;
-    //    cout<<cafeteria.first<<endl;
-    //     auto menuTable = cafeteriaMap[key].getMenuTable(date, time);
-    //    for(auto menulist:menuTable){
-    //      cout<<menulist.first<<endl;
-    //      for(auto food:menulist.second.getFoodlist()){
-    //        cout<<food<<endl;
-    //      }
-    //      cout<<"---------------------------"<<endl;
-    //    }
-    //  }
+    if (selection == 1) {
+        for (auto cafeteria : cafeteriaMap) {
+            cout << cafeteria.first << endl;
+            for (auto menulist : cafeteria.second.getMenuTable(stoi(date), validTime::Lunch)) {
+                cout << menulist.first << endl;
+                for (auto food : menulist.second.getFoodList()) {
+                    cout << food << endl;
+                }
+                cout << "---------------------------" << endl;
+            }
+        }
+    }
+    else {
+        for (auto cafeteria : cafeteriaMap) {
+            cout << cafeteria.first << endl;
+            for (auto menulist : cafeteria.second.getMenuTable(stoi(date), validTime::Dinner)) {
+                cout << menulist.first << endl;
+                for (auto food : menulist.second.getFoodList()) {
+                    cout << food << endl;
+                }
+                cout << "---------------------------" << endl;
+            }
+        }
+    }
+   
 }
+
 
 //종료
 void finishConsole() {
