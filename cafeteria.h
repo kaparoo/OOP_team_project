@@ -5,44 +5,40 @@
 #include <string>
 #include <vector>
 
-#include "csv_reader.h"
-#include "menu.h"
 #include "food.h"
+#include "menu.h"
 
-using namespace std;
+namespace menu_recomendation_service {
+    
+    enum class validTime { Lunch, Dinner, None };
 
-enum class validTime { Lunch, Dinner, None };
+    class Cafeteria final {
+    private:
+        static std::map<std::string, Food> foodMap;
+        std::string csv_list_file_name;
+        std::vector<std::string> csvFileList;
+        std::vector<unsigned int> dateList;
+        std::map<std::string, std::vector<Menu>> menuTable;
+        std::map<std::string, validTime> categoryValidTime;
 
-class Cafeteria {
-protected:
-    // Member variables
-    static map<string, Food> foodMap;
-    static const string dir_prefix;
-    string csv_list_file_name;
-    vector<string> csvFileList;
-    vector<int> dateList;
-    typedef vector<Menu> MenuList;
-    map<string, MenuList> menuTable;
-    map<string, validTime> categoryValidTime;
+        // Private member functions
+        inline void setCSVFileList();
+        inline unsigned int getTotalCalorie(const std::vector<std::string>&) const;
+        void addCSVtoMenuTable(const std::string&);
 
-    // Protected member functions
-    inline void setCSVFileList(void);
-    inline int getTotalCalorie(const vector<string>& foodList) const;
+    public:
+        // Constructor & Destructor
+        Cafeteria(const std::string&, const std::map<std::string, validTime>&) noexcept;
+        ~Cafeteria() { }
 
-    void addCSVtoMenuTable(const string& csv_file_name);
+        // Public member functions
+        inline bool isValidDate(const int&) const;
+        std::map<std::string, Menu> getMenuTable(const int&, const validTime&); // for non-member user
+        std::map<std::string, Menu> getMenuTable(const int&, const validTime&, const int&); // for member user
 
-public:
-    // Constructor & Destructor
-    Cafeteria() {}; // DO NOT USE this default Constructure
-    Cafeteria(const string new_list_file_name, const map<string, validTime> newCategoryValidTime);
-    virtual ~Cafeteria() {};
+    };
 
-    // Public member functions
-    inline bool isValidDate(const int& date) const;
-    map<string, Menu> getMenuTable(const int& date, const validTime& time); // for non-member user
-    map<string, Menu> getMenuTable(const int& date, const validTime& time, const int& calorie); // for member user
-};
+    std::map<std::string, Cafeteria> updateCafeteria();
+}
 
-
-map<string, Cafeteria> updateCafeteria();
-#endif
+#endif // ! __OOP_CAFETERIA__

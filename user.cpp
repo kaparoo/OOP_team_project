@@ -1,99 +1,113 @@
 #include "user.h"
 
-#include <iostream>
 #include <fstream>
-#include <string>
 #include <map>
+#include <string>
 
+#include "config.h"
 #include "csv_reader.h"
 #include "menu.h"
 
-using namespace std;
-int User::usernum = 0;
+namespace menu_recomendation_service {
 
-User::User(int fir_id, string fir_password) {
-	id = fir_id;
-	password = fir_password;
-	calorie = 0;
-	usernum++;
-}
-User::User(int fir_id, string fir_password, int fir_calorie) {
-	id = fir_id;
-	password = fir_password;
-	calorie = fir_calorie;
-	usernum++;
-}
-int User::getId() {
-	return id;
-}
-bool User::checkId(string check_password) {
-	if (this->password == check_password)
-		return true;
-	else
-		return false;
-}
-string User::getPassword() {
-	return password;
-}
-void User::changePassword(string new_password) {
-	password = new_password;
-}
-int User::getCal() {
-	return calorie;
-}
-void User::setCal(Menu m) {
-	calorie = static_cast<int>(m.getCalorie());
-}
-void User::setCal(int m) {
-	calorie = m;
-}
-User::~User() {}
-map<int, User> updateUser() {
-	map<int, User> m;
-	CSVReader reader("data_files/data.csv");
-	vector<vector<string>> data = reader.getDataTable();
-	for (int i = 0; i < data.size(); i++) {
-		m.insert(pair<int, User>(stoi(data[i][0]), User(stoi(data[i][0]), data[i][1], stoi(data[i][2]))));
+	unsigned int User::usernum = 0;
+
+	User::User(const unsigned int& id, const std::string& password) noexcept{
+		// this->id = new unsigned int(id);
+		// this->password = new std::string(password);
+		// this->calorie = new unsigned int(0);
+		this->id = id;
+        this->password = password;
+        this->calorie = 0;
+        ++usernum;
 	}
-	return m;
-}
 
-void storeUser(User u1) { // 새로운 유저가 만들어지면 무조건 storeUser해주세요.
+	User::User(const unsigned int& id, const std::string& password, const unsigned int& calorie) noexcept {
+		// this->id = new unsigned int(id);
+		// this->password = new std::string(password);
+		// this->calorie = new unsigned int(calorie);
+		this->id = id;
+        this->password = password;
+        this->calorie = calorie;
+        ++usernum;
+	}
+
+	User::~User() {
+		// delete id;
+		// delete password;
+		// delete calorie;
+		// --usernum;
+	}
+
+	void User::setCalorie(const Menu& menu) {
+		// if (this->calorie != nullptr) delete calorie;
+		// this->calorie = new unsigned int(menu.getCalorie());
+        this->calorie = menu.getCalorie();
+    }
+
+	void User::setCalorie(const unsigned int& new_calorie) {
+		// if (this->calorie != nullptr) delete calorie;
+		// this->calorie = new unsigned int(new_calorie);
+        this->calorie = new_calorie;
+    }
+
+	unsigned int User::getId() const { return this->id; }
+	unsigned int User::getCalorie() const { return this->calorie; }
+	std::string User::getPassword() const { return this->password; } // private member function
 	
-	CSVReader reader("data_files/data.csv");
-	vector<vector<string>> data = reader.getDataTable();
-	ofstream newfile;
-	newfile.open("data_files/data.csv");
-	for (int i = 0; i < User::usernum; i++) {
-		for (int j = 0; j < 3; j++) {
-			newfile << data[i][j] << ",";
+	bool User::checkId(const std::string& target_password) {
+		if (this->password == target_password) {
+			return true;
 		}
-		newfile << "\n";
+		else {
+			return false;
+		}
 	}
-	newfile << u1.id << "," << u1.password << "," << u1.calorie << "," << "\n";
-}
+	void User::changePassword(const std::string& new_password) {
+		// if (this->password != nullptr) delete this->password;
+		// this->password = new std::string(new_password);
+        this->password = new_password;
+    }
 
-void storeUser(map<int, User> userMap) {
-	ofstream newfile;
-	newfile.open("data_files/data.csv");
-	for (auto p : userMap) {
-		newfile << p.first << "," << userMap[p.first].password << "," << userMap[p.first].calorie << "," << "\n";
+	// Friend functions
+	std::map<unsigned int, User> updateUser() {
+		std::map<unsigned int, User> userMap;
+
+		CSVReader userFile(file_path + user_file);
+
+		std::vector<std::vector<std::string>> userData = userFile.getDataTable();
+		
+		for (const auto& row : userData) {
+			const unsigned int& _id = std::stoi(row[0]);
+			const std::string _pw = row[1];
+			const unsigned int& _calorie = std::stoi(row[2]);
+			userMap.insert(std::pair<unsigned int, User>(_id, User(_id, _pw, _calorie)));
+		}
+
+		return userMap;
+
 	}
-}
 
-/* 컴파일 오류때문에 주석처 (11/30)
- * main함수는 프로그램 내에서 오직 하나만 존재해야 해
- * 테스트 때문에 집어넣은거야? -박재우
- * 맞습니다.
- */
- // int main() {
- // 	int a;
- //	User u(201911066, "dddd", 333);
- //	storeUser(u);
- //	map<int, User> m = updateUser();
- //	for (auto p : m) {
- //		cout << p.first << m[p.first].getPassword() << endl;
- //	}
- //	m[201911195].changePassword("Kee");
- //	storeUser(m);
- //}
+	void storeUser(const User& user) {
+        CSVReader userFile(file_path + user_file);
+        std::vector<std::vector<std::string>> userData = userFile.getDataTable();
+        std::ofstream newFile(file_path+user_file);
+        for (unsigned int i = 0; i < User::usernum; ++i) {
+		    for (int j = 0; j < 3; ++j) {
+			    newFile << userData[i][j] << ",";
+		    }
+		    newFile << "\n";
+	    }
+	    newFile << user.getId() << "," << user.getPassword() << "," << user.getCalorie() << ","<< "\n";
+        newFile.close();
+	}
+
+    void storeUser(std::map<unsigned int, User>& userMap) {
+    	std::ofstream newFile(file_path+user_file);
+	    for (auto p : userMap) {
+            const unsigned int _id = p.first;
+		    newFile << _id << "," << userMap[_id].getPassword() << "," << userMap[_id].getCalorie() << "," <<"\n";
+	    }
+        newFile.close();
+    }
+}

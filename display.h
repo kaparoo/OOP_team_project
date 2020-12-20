@@ -1,18 +1,11 @@
-#include <iostream>
-#include <iomanip>
+#ifndef __OOP_DISPLAY__
+#define __OOP_DISPLAY__
+
 #include <vector>
 #include <string>
 
-using std::cin;
-using std::cout;
-using std::endl;
-using std::setw;
-using std::system;
-using std::string;
-using std::vector;
-using std::left;
-using std::right;
-
 void displayClear();
 
-void displayPromptInBox(const vector<string>& prompt, const int& padding);
+void displayPromptInBox(const std::vector<std::string>&, const unsigned int&);
+
+#endif // ! __OOP_DISPLAY__

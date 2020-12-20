@@ -1,23 +1,25 @@
 #ifndef __OOP_CSV_READER__
 #define __OOP_CSV_READER__
 
-#include <fstream>
 #include <string>
 #include <vector>
 
-using std::ifstream;
-using std::string;
-using std::vector;
-
-class CSVReader {
+class CSVReader final {
 private:
-    string file_name;
+    std::string file_name;
 public:
-    CSVReader(const string&);
-    ~CSVReader() {};
-    vector<vector<string>> getDataTable();
+    CSVReader(const std::string&) noexcept;
+    ~CSVReader() { };
+    // void setDataTable();
+    std::vector<std::vector<std::string>> getDataTable() const;
 };
 
-vector<string> splitLine(const string&, const char&);
+std::vector<std::string> splitLine(const std::string&, const char&);
 
-#endif
+inline bool isNumeric(const std::string& target_str) {
+    for (int i = 0; i < target_str.length(); i++)
+        if (isdigit(target_str[i]) == false) return false;
+    return true;
+}
+
+#endif // !__OOP_CSV_READER__

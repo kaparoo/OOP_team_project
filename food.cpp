@@ -1,51 +1,67 @@
 #include "food.h"
 
-Food::Food(string name) {
-	this->name = name;
-}
+#include <iostream>
 
-Food::Food(string name, unsigned int calorie) {
-	this->name = name;
-	this->calorie = calorie;
-}
+#include "config.h"
+#include "csv_reader.h"
 
-void Food::setCal(unsigned int calorie) { this->calorie = calorie; }
+namespace menu_recomendation_service {
 
-string Food::getName() { return this->name; };
-unsigned int Food::getCal() { return this->calorie; };
+	Food::Food(const std::string& name) noexcept {
+		this->name = name;
+		this->calorie = 0;
+	}
 
-map<string, Food> updateFood() {
-	
-    CSVReader foodFile("./data_files/food.csv");
+	Food::Food(const std::string& name, const unsigned int& calorie) noexcept {
+		this->name = name;
+		this->calorie = calorie;
+	}
 
-    map<string, Food> foodMap;
+	Food::~Food() {
+		// delete name;
+		// delete calorie;
+	}
 
-    const vector<vector<string>>& foodCalorieTable = foodFile.getDataTable();
-    for(const vector<string>& line: foodCalorieTable)
-        // line[0]: name of food, line[1]: calorie(type: string) of food
-        foodMap.insert(make_pair(line[0], Food(line[0], stoi(line[1]))));
+	inline void Food::setCalorie(const unsigned int& calorie) {
+		// if (this->calorie != nullptr) delete this->calorie;
+		// this->calorie = new unsigned int(calorie);
+        this->calorie = calorie;
+    }
 
-    // ifstream foodFile("./data_files/food.txt", std::ios::in);
-    // string name;
-    // string calorie;
-    // map<string, Food> foodMap;
-    // while (foodFile.peek() != EOF) {
-    //     getline(foodFile, name, ',');
-    //     getline(foodFile, calorie);
-    //     foodMap.insert(make_pair(name, Food(name, stoi(calorie))));
-    // }
-    // foodFile.close();
+	inline std::string Food::getName() const {
+		return this->name;
+	}
 
-    return foodMap;
-}
+	unsigned int Food::getCalorie() const {
+		return this->calorie;
+	}
 
-// #include <iostream>
-// int main() {
-//     const auto foodTable = updateFood();
-//     for(const auto& entry : foodTable) {
-//         const auto& food_name = entry.first; // key
-//         const auto& calorie = entry.second.getCal(); // value
-//         std::cout << food_name << " : " << calorie << std::endl;
-//     }
-//     return 0;
-// }
+	std::map<std::string, Food> updateFood() {
+
+		CSVReader foodFile(file_path+food_file);
+
+		std::map<std::string, Food> foodMap;
+
+		const std::vector<std::vector<std::string>>& foodCalorieTable = foodFile.getDataTable();
+
+		for (const std::vector<std::string>& line : foodCalorieTable) {
+			// line[0]: name of food, line[1]: calorie(type: string) of food
+            const std::string _name = line[0];
+            unsigned int _calorie = std::stoi(line[1]);
+            
+            // std::cout << _name << " : " << line[1] << std::endl;
+
+            
+            /*
+            if(isNumeric(line[1]) == true) {
+                int temp = std::stoi(line[1]);
+                if(temp > 0) _calorie = temp;
+            }*/
+            
+			foodMap.insert(std::make_pair(_name, Food(_name, _calorie)));
+		}
+
+		return foodMap;
+	}
+
+} // namespace menu_recomendation_service

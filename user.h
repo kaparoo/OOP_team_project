@@ -1,41 +1,45 @@
 #ifndef __OOP_USER__
 #define __OOP_USER__
 
-#include <iostream>
-#include <fstream>
-#include <string>
 #include <map>
+#include <string>
 
-#include "csv_reader.h"
 #include "menu.h"
 
-using namespace std;
+namespace menu_recomendation_service {
+	class User final {
+	private:
+		static unsigned int usernum; // total number of the registered users
+		unsigned int id;
+		std::string password;
+		unsigned int calorie;
 
-class User {
-protected:
-	static int usernum;
-	int id;
-	string password;
-	int calorie;
-public:
-	User() { usernum++; id = 0; calorie = 0; }
-	User(int, string);
-	User(int, string, int);
-	~User();
-	int getId();
-	bool checkId(string);
-	int getCal();
-	void setCal(Menu);
-	void setCal(int);
-	void changePassword(string);
-	string getPassword();
-	friend void storeUser(User);
-	friend void storeUser(map<int, User>);
-	friend map<int, User> updateUser();
-	//void setCal(Menu);
-	//maybe set id 
-};
+		// Private member function
+		std::string getPassword() const;
 
-map<int, User> updateUser();
+	public:
+    User(){};
+		User(const unsigned int&, const std::string&) noexcept;
+		User(const unsigned int&, const std::string&, const unsigned int&) noexcept;
+		~User();
 
-#endif
+		// Public member functions
+		void setCalorie(const Menu&);
+		void setCalorie(const unsigned int&);
+
+		unsigned int getId() const;
+		unsigned int getCalorie() const;
+
+		bool checkId(const std::string&);
+		void changePassword(const std::string&);
+
+		// Friend functions
+		friend void storeUser(const User&);
+		friend void storeUser(std::map<unsigned int, User>&);
+		friend std::map<unsigned int, User> updateUser();
+
+	};
+  std::map<unsigned int, User> updateUser();
+}
+
+#endif // !__OOP_USER__

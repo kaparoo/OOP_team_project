@@ -1,33 +1,37 @@
 #include "csv_reader.h"
 
-CSVReader::CSVReader(const string& new_file_name) { this->file_name = new_file_name; }
+#include <fstream>
+#include <sstream>
 
-vector<string> splitLine(const string& line, const char& delimeter) {
-    vector<string> result;
-    string word = "";
-    char cursor;
-    for(int i = 0; i < line.length(); ++i) {
-        cursor = line[i];
-        if(cursor == delimeter) {
-            if(word.length()>0) result.push_back(word);
-            word.clear();
-        } else {
-            if(cursor == ' ') continue;
-            word += cursor;
-        }
-    }
-    return result;
+CSVReader::CSVReader(const std::string& file_name) noexcept {
+    this->file_name = file_name; // file name with path
 }
 
-vector<vector<string>> CSVReader::getDataTable() {
-    ifstream csvFile(file_name);
-    vector<vector<string>> dataTable;
-    string line = "";
-    while(getline(csvFile, line)) {
-        vector<string> dataRow = splitLine(line, ',');
+std::vector<std::vector<std::string>> CSVReader::getDataTable() const {
+    
+    std::ifstream csvFile(file_name);
+    
+    std::vector<std::vector<std::string>> dataTable;
+    
+    std::string line = "";
+    while (getline(csvFile, line)) {
+        std::vector<std::string> dataRow = splitLine(line, ',');
         dataTable.push_back(dataRow);
     }
+
     csvFile.close();
 
     return dataTable;
 }
+
+std::vector<std::string> splitLine(const std::string& line, const char& delimiter) {
+    std::vector<std::string> result;
+    std::stringstream stream(line);
+    std::string temp;
+    while (std::getline(stream, temp, delimiter)) {
+        if(temp!="")
+            result.push_back(temp);
+    }
+    return result;
+}
+
